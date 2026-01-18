@@ -9,30 +9,48 @@ let bbq_step = 1;
 
 
 
-// Query selectors for all buttons and scooters go here
+const pepperoniButton = document.querySelector("#pepperoni-button");
+const veggieButton = document.querySelector("#veggie-button");
+const bbqButton = document.querySelector("#bbq-button");
+
+const pepperoniScooter = document.querySelector("#pepperoni-scooter");
+const veggieScooter = document.querySelector("#veggie-scooter");
+const bbqScooter = document.querySelector("#bbq-scooter");
+
+const winnerDisplay = document.querySelector("#winner")
 
 
-
-// Write the function that moves the pepperoni scooter forward
-// Increase the pepperoni position
-// Call the helper function to update the scooter position
-// Call the winner check function
-
-
-
-// Write the function that moves the veggie scooter forward
+function movePepperoni() {
+    pepperoni_step++;
+    shift(pepperoniScooter, pepperoni_step);
+    checkWInner("Pepperoni", pepperoni_step);
+}
 
 
-
-// Write the function that moves the bbq scooter forward
-
-
-
-// Write a function that checks if a scooter reached column 7
-// If so, display the winner message
-// Disable all buttons when a winner is found
+function moveVeggie() {
+    veggie_step++;
+    shift(veggieScooter, veggie_step);
+    checkWinner("Veggie", veggie_step);
+}
 
 
+function checkWinner(name, step) {
+    bbq_step++;
+    shift(bbq_step);
+    checkWinner("BBQ", bbq_step);
+}
 
-// Add event listeners for each button
-// Each button should trigger its own movement function
+
+function checkWinner(name, step) {
+    if (step >= 7) {
+        winnerDisplay.textContent = name + "delivery wins! 🍕";
+        pepperoniButton.disabled = true;
+        veggieButton.disabled = true;
+        bbqButton.disabled = true;
+    }
+}
+
+
+pepperoniButton.addEventListener("click", movePepperoni);
+veggieButton.addEventListener("click", moveVeggie);
+bbqButton.addEventListener("click", moveBBQ);
